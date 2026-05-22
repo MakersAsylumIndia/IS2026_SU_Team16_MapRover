@@ -1,15 +1,20 @@
 from setuptools import find_packages, setup
+import os
+from glob import glob
 
 package_name = 'maprover_core'
 
 setup(
-    name=package_name,
+    name='maprover_core',
     version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    packages=['maprover_core'],
     data_files=[
         ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
+            ['resource/maprover_core']),
+        ('share/' + 'maprover_core', ['package.xml']),
+        # Tell ROS 2 to include our new launch and config files
+        (os.path.join('share', 'maprover_core', 'launch'), glob('launch/*.launch.py')),
+        (os.path.join('share', 'maprover_core', 'config'), glob('config/*.yaml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
