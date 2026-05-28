@@ -1,24 +1,34 @@
 slam_toolbox:
   ros__parameters:
-    # Sensor settings
     use_sim_time: false
     odom_frame: odom
     map_frame: map
     base_frame: base_link
     scan_topic: /scan
-    
-    # Mapper settings
     mode: mapping
     debug_logging: false
-    transform_timeout: 0.2
-    
-    # Map update parameters
-    map_update_interval: 2.0
+    transform_timeout: 1.0
+    map_update_interval: 3.0
     resolution: 0.05
-    provide_odom_frame: true   # ← slam_toolbox tracks position itself
+    provide_odom_frame: false
     scan_queue_size: 10
     use_scan_matching: true
-    minimum_time_interval: 0.5
-    tf_buffer_duration: 30.0
     use_scan_barreling: false
+    minimum_time_interval: 0.1
+    tf_buffer_duration: 30.0
+    max_laser_range: 8.0
+    minimum_travel_distance: 0.0
+    minimum_travel_heading: 0.0
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+    do_loop_closing: true
+    loop_search_space_dimension: 8.0
+    loop_search_minimum_chain_size: 10
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_covariance: 3.0
+    loop_match_minimum_response_coarse: 0.35
+    loop_match_minimum_response_fine: 0.45
 

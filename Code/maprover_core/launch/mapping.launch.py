@@ -1,6 +1,5 @@
 from launch import LaunchDescription
 from launch_ros.actions import LifecycleNode, Node
-from launch.actions import TimerAction
 import os
 from ament_index_python.packages import get_package_share_directory
 
@@ -18,18 +17,31 @@ def generate_launch_description():
         'mapper_params_online_async.yaml'
     )
 
+    # base_link → laser_frame (physical sensor position)
+    static_tf_laser = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_laser',
+        arguments=[
+            '--x', '0', '--y', '0', '--z', '0.02',
+            '--roll', '0', '--pitch', '0', '--yaw', '0',
+            '--frame-id', 'base_link',
+            '--child-frame-id', 'laser_frame'
+        ]
+    )
+
+    # odom → base_link (bootstrap transform so slam_toolbox can initialise)
+    # slam_toolbox takes over publishing this once it processes its first scan
     static_tf_odom = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         name='static_tf_odom',
-        arguments=['0', '0', '0', '0', '0', '0', '1', 'odom', 'base_link']
-    )
-
-    static_tf_laser = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_node',
-        arguments=['0', '0', '0.02', '0', '0', '0', '1', 'base_link', 'laser_frame']
+        arguments=[
+            '--x', '0', '--y', '0', '--z', '0',
+            '--roll', '0', '--pitch', '0', '--yaw', '0',
+            '--frame-id', 'odom',
+            '--child-frame-id', 'base_link'
+        ]
     )
 
     lidar_node = LifecycleNode(
@@ -42,23 +54,17 @@ def generate_launch_description():
         namespace='/',
     )
 
-    slam_node = TimerAction(
-        period=5.0,
-        actions=[
-            Node(
-                package='slam_toolbox',
-                executable='async_slam_toolbox_node',
-                name='slam_toolbox',
-                output='screen',
-                parameters=[slam_config],
-            )
-        ]
+    slam_node = Node(
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox',
+        output='screen',
+        parameters=[slam_config],
     )
 
     return LaunchDescription([
         static_tf_odom,
         static_tf_laser,
         lidar_node,
-        slam_node,    # No relay node
+        slam_node,
     ])
-
