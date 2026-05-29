@@ -25,6 +25,6 @@ MIT open source [license](http://opensource.org/licenses/MIT).
 
 > _List team members and contact emails or GitHub profiles._
 [@anool](https://github.com/Anool)
-[@sresht](mailto:sreshtchandgotia@gmail.com)
+[sresht](mailto:sreshtchandgotia@gmail.com)
 [@aayan]
 > ---
