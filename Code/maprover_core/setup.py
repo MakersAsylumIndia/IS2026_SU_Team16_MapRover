@@ -29,6 +29,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+		'imu_publisher = maprover_core.imu_publisher:main',
         ],
     },
 )

@@ -7,17 +7,16 @@ def generate_launch_description():
 
     ydlidar_params = os.path.join(
         get_package_share_directory('ydlidar_ros2_driver'),
-        'params',
-        'ydlidar.yaml'
-    )
+        'params', 'ydlidar.yaml')
 
     slam_config = os.path.join(
         get_package_share_directory('maprover_core'),
-        'config',
-        'mapper_params_online_async.yaml'
-    )
+        'config', 'mapper_params_online_async.yaml')
 
-    # base_link → laser_frame (physical sensor position)
+    ekf_config = os.path.join(
+        get_package_share_directory('maprover_core'),
+        'config', 'ekf.yaml')
+
     static_tf_laser = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
@@ -30,18 +29,31 @@ def generate_launch_description():
         ]
     )
 
-    # odom → base_link (bootstrap transform so slam_toolbox can initialise)
-    # slam_toolbox takes over publishing this once it processes its first scan
-    static_tf_odom = Node(
+    static_tf_imu = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        name='static_tf_odom',
+        name='static_tf_imu',
         arguments=[
             '--x', '0', '--y', '0', '--z', '0',
             '--roll', '0', '--pitch', '0', '--yaw', '0',
-            '--frame-id', 'odom',
-            '--child-frame-id', 'base_link'
+            '--frame-id', 'base_link',
+            '--child-frame-id', 'imu_link'
         ]
+    )
+
+    imu_node = Node(
+        package='maprover_core',
+        executable='imu_publisher',
+        name='imu_publisher',
+        output='screen',
+    )
+
+    ekf_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[ekf_config],
     )
 
     lidar_node = LifecycleNode(
@@ -63,8 +75,10 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        static_tf_odom,
         static_tf_laser,
+        static_tf_imu,
+        imu_node,
+        ekf_node,
         lidar_node,
         slam_node,
     ])
