@@ -1,6 +1,19 @@
-﻿Name of the Material/Component,Quantity,Reference Link,Additional Note
-,,,
-,,,
-,,,
-,,,
-,,,
+Name of the Material/Component,Quantity,Reference Link,Additional Note
+ROVER 6WD BO60 Chassis Kit,1,https://www.amrobotics.in/products/rover-6wd-bo60-chassis-kit,"Includes 6x BO60 60RPM motors, wheels, rocker-bogie frame and assembly manual. SG90 servo and ultrasonic sensor included in kit are not used in this project."
+YDLidar X2,1,https://probots.co.in/ydlidar-x2-triangulation-series-distance-sensor-rangefinder-8m-360-uart.html,"360 degree laser scanner with 8m range. Connects to Raspberry Pi via USB. Must be mounted at highest point of rover with clear 360 degree view."
+Raspberry Pi 3 Model B,1,https://robu.in/product/raspberry-pi-3-model-b-plus-starter-kit/,"Main mapping computer running Ubuntu Server 22.04 and ROS2 Humble. Requires 16GB+ microSD card. Apply heatsinks before first boot."
+ESP32 Dev Module,1,https://robu.in/product/esp32-38pin-development-board-wifibluetooth-ultra-low-power-consumption-dual-core/,"Motor controller. Hosts its own WiFi access point and WebSocket server for browser-based rover control."
+L298N Dual H-Bridge Motor Driver,1,https://robu.in/product/l298n-dual-h-bridge-dc-stepper-motor-driver-controller-module/,"Channel A (OUT1+OUT2) drives right 2 motors. Channel B (OUT3+OUT4) drives left 2 motors. Connect ESP32 GND to L298N GND."
+MPU-6050 IMU Module,1,https://robu.in/product/mpu-6050-triple-axis-accelerometer-and-gyro-breakout/,"6-axis gyroscope and accelerometer. Connects to Raspberry Pi via I2C (SDA pin 3 and SCL pin 5). Must be mounted flat and level."
+11.1V 5000mAh 3S Li-Ion Battery,1,https://robu.in/product-category/batteries/lipo-batteries/,"Powers motors via L298N. Keep completely isolated from Raspberry Pi power circuit. Secure low on chassis for lower center of gravity."
+10000mAh Powerbank,1,https://www.amazon.in/s?k=10000mah+powerbank,"Powers Raspberry Pi via USB. Must output 5V at 2.5A minimum. Using a separate powerbank prevents motor voltage spikes from corrupting the Pi."
+Aluminium Heatsink Set for Raspberry Pi,1,https://robu.in/product-category/raspberry-pi/raspberry-pi-accessories/,"Apply largest heatsink to main processor chip and medium heatsink to USB/Ethernet controller chip before mounting Pi on chassis."
+M3 Nylon Standoff Spacer Kit,1,https://robu.in/product-category/components/standoffs-and-spacers/,"Use to mount all PCBs above metal chassis. Never place circuit boards directly on metal chassis as it causes short circuits."
+XT60H Connector Pair,1,https://robu.in/product/xt60h-male-female-connector-pair/,"Main battery connector. Solder to battery leads and power wires going to L298N."
+MicroSD Card 32GB Class 10,1,https://www.amazon.in/s?k=32gb+microsd+class+10,"OS storage for Raspberry Pi. Class 10 or U3 minimum. Faster cards reduce boot time."
+USB-A to Micro-USB Cable,2,https://robu.in/product-category/cables-and-wires/usb-cables/,"One for Powerbank to Raspberry Pi. One for ESP32 programming via Arduino IDE. Must support data transfer not just charging."
+USB-A to USB-A Cable,1,https://www.amazon.in/s?k=usb+a+to+usb+a+cable,"Connects YDLidar X2 USB adapter board to Raspberry Pi USB port."
+Silicone Wire 20AWG (Red and Black),1,https://robu.in/product-category/cables-and-wires/silicone-wires/,"For motor and power connections between battery, L298N and motors."
+Jumper Wires Set (M-M and M-F),1,https://robu.in/product-category/cables-and-wires/jumper-wires/,"For signal connections between ESP32 and L298N. Also for MPU-6050 to Raspberry Pi I2C connections."
+3D Printed Parts,1,https://github.com/MakersAsylumIndia/IS2026_SU_Team16_MapRover/tree/main/CAD,"Custom mounts for YDLidar X2 and component brackets. STL files in the CAD folder of this repo. Print in PLA at 20% infill minimum."
+Zip Ties and Double-Sided Foam Tape,1,https://www.amazon.in/s?k=zip+ties+double+sided+tape,"For cable management and securing components to the chassis frame."
